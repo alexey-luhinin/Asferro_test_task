@@ -58,13 +58,14 @@ class GmailMailboxPage(BasePage):
         return full_message
 
     def remove_all_except_first(self):
-        select_all = self.get_element_if_located(*self.locator.SELECT_ALL)
-        select_first = self.get_element_if_located(*self.locator.SELECT_FIRST)
-        delete_all = self.get_element_if_located(*self.locator.DELETE_ALL)
         actions = ActionChains(self.driver)
-        actions.move_to_element(select_all).click().move_to_element(
-            select_first
-        ).click().move_to_element(delete_all).click().perform()
+        select_all = self.get_element_if_located(*self.locator.SELECT_ALL)
+        actions.move_to_element(select_all).click()
+        select_first = self.get_element_if_located(*self.locator.SELECT_FIRST)
+        actions.move_to_element(select_first).click()
+        delete_all = self.get_element_if_located(*self.locator.DELETE_ALL)
+        actions.move_to_element(delete_all).click()
+        actions.perform()
         time.sleep(2)
 
     def check_messages(self):
